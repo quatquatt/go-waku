@@ -74,6 +74,18 @@ func (t timestamp) String() string {
 	return time.Unix(0, int64(t)).Format(time.RFC3339)
 }
 
+func Epoch(key string, time time.Time) zap.Field {
+	return zap.String(key, fmt.Sprintf("%d", time.UnixNano()))
+}
+
+func Epochp(key string, time *time.Time) zap.Field {
+	valueStr := "-"
+	if time != nil {
+		valueStr = fmt.Sprintf("%d", time.UnixNano())
+	}
+	return zap.String(key, valueStr)
+}
+
 // History Query Filters
 type historyFilters []*pb.ContentFilter
 
